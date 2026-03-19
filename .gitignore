@@ -1,0 +1,39 @@
+# Credenciales y sesiones (¡MUY IMPORTANTE!)
+.env
+*.session
+WTelegram.session
+session.dat
+
+# Carpetas de compilación (ignorar carpetas completas)
+bin/
+obj/
+
+# Archivos de configuración de usuario
+*.user
+*.userosscache
+*.suo
+*.userprefs
+
+# Archivos de IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*.*~
+
+# Archivos de log
+*.log
+logs/
+
+# Archivos temporales
+*.tmp
+*.temp
+/crashlytics.build.log
+
+# NuGet packages
+packages/
+*.nupkg
+
+# Archivos de publicación
+publish/
+*.publish.xml

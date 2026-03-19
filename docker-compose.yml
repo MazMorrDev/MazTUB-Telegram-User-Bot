@@ -1,0 +1,13 @@
+services:
+  workfilterbot:
+    build: .
+    container_name: workfilterbot
+    restart: unless-stopped
+    environment:
+      - API_ID=${API_ID}
+      - API_HASH=${API_HASH}
+      - PHONE_NUMBER=${PHONE_NUMBER}
+    volumes:
+      - ./session:/app/session
+    env_file:
+      - .env

@@ -1,0 +1,30 @@
+# Credenciales y sesiones
+.env
+*.session
+WTelegram.session
+session/
+
+# Archivos de compilación
+bin/
+obj/
+publish/
+
+# Archivos de IDE
+.vscode/
+.idea/
+*.user
+*.suo
+
+# Archivos de Git
+.git/
+.gitignore
+.gitattributes
+
+# Archivos de Docker
+Dockerfile
+.dockerignore
+docker-compose.yml
+
+# Archivos temporales
+*.log
+*.tmp
