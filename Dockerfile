@@ -1,5 +1,5 @@
 # Etapa 1: Build
-FROM /usr/share/dotnet/sdk:10.0 AS build
+FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
 WORKDIR /src
 
 # Copiar el archivo de proyecto y restaurar dependencias
@@ -11,7 +11,7 @@ COPY . .
 RUN dotnet publish "WorkFilterBot.csproj" -c Release -o /app/publish
 
 # Etapa 2: Runtime
-FROM /usr/share/dotnet/shared/Microsoft.NETCore.App:10.0
+FROM mcr.microsoft.com/dotnet/runtime:10.0
 WORKDIR /app
 
 # Instalar dependencias necesarias
