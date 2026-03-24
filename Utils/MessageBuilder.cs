@@ -6,7 +6,7 @@ namespace WorkFilterBot;
 public static class MessageBuilder
 {
     // Construye los mensajes que luego se enviarán
-    async static Task ProccessMessage(Message message, long[] GRUPOS_A_MONITOREAR, string[] FILTROS, Client client)
+    public async static Task ProccessMessage(Message message, long[] GRUPOS_A_MONITOREAR, string[] FILTROS, Client client)
     {
         try
         {
@@ -115,7 +115,7 @@ public static class MessageBuilder
     }
 
     // Función para listar todos los grupos donde estás
-    async static Task ListGroups(Client client)
+    public async static Task ListGroups(Client client)
     {
         try
         {

@@ -1,6 +1,5 @@
 ﻿using WTelegram;
 using TL;
-using DotNetEnv;
 using WorkFilterBot;
 
 // Variables estáticas para acceso desde métodos static
@@ -47,7 +46,7 @@ try
     }
 
     // Mostrar todos los grupos disponibles
-    await ListGroups();
+    await MessageBuilder.ListGroups(client);
 
     // Suscribirse a los mensajes nuevos
     client.OnUpdates += OnUpdate;
@@ -82,7 +81,7 @@ async Task OnUpdate(IObject arg)
                 if (update is UpdateNewMessage updateNewMessage &&
                     updateNewMessage.message is Message message)
                 {
-                    await ProccessMessage(message);
+                    await MessageBuilder.ProccessMessage(message, GRUPOS_A_MONITOREAR, FILTROS, client);
                 }
             }
         }
