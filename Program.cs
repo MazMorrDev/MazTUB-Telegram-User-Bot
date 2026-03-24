@@ -11,8 +11,17 @@ long MY_USER_ID = 0;
 // El texto a filtrar
 string[] FILTROS = [".net", "c#", "azure", "entity framework"];
 
-// IDs de grupos específicos - SOLO ESTOS GRUPOS SERÁN MONITOREADOS
-long[] GRUPOS_A_MONITOREAR =
+// IDs de grupos específicos - SOLO ESTOS GRUPOS SERÁN MONITOREADOS PARA RECIBIR MENSAJES
+long[] GRUPOS_A_ESCUCHAR =
+[
+    1131530511,  // CubanTech Jobs
+    1594268732,  // Cuba CompuJobs
+    1382170463,  // Cuban Software Developers
+    1449611471,  // Cuban web developers
+];
+
+// IDs de grupos específicos - SOLO ESTOS GRUPOS SERÁN MONITOREADOS PARA ENVIAR MENSAJES
+long[] GRUPOS_A_ENVIAR =
 [
     1131530511,  // CubanTech Jobs
     1594268732,  // Cuba CompuJobs
@@ -82,7 +91,7 @@ async Task OnUpdate(IObject arg)
                 if (update is UpdateNewMessage updateNewMessage &&
                     updateNewMessage.message is Message message)
                 {
-                    await MessageBuilder.ProccessMessage(message, GRUPOS_A_MONITOREAR, FILTROS, client);
+                    await MessageBuilder.ProccessMessage(message, GRUPOS_A_ESCUCHAR, FILTROS, client);
                 }
             }
         }
