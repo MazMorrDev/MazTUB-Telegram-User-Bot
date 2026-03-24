@@ -32,6 +32,7 @@ try
     Console.WriteLine($"🆔 API ID: {API_ID}");
 
     // Crear cliente con la configuración
+
     client = new Client(CredentialsConfig.Config);
 
     // Login automático (la primera vez pedirá código)

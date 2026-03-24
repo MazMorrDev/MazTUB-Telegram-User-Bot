@@ -2,9 +2,16 @@
 
 public static class CredentialsConfig
 {
+    // Variables estáticas para acceso desde métodos static
+    static readonly string API_ID = "";
+    static readonly string API_HASH = "";
+    static readonly string PHONE_NUMBER = "";
+    static readonly long MY_USER_ID = 0;
+
     // Configuración que WTelegramClient llama cuando necesita datos
     public static string? Config(string what)
     {
+        EnvConfig.LoadEnvConfig(API_ID, API_HASH, PHONE_NUMBER, MY_USER_ID);
         switch (what)
         {
             case "api_id": return API_ID;
