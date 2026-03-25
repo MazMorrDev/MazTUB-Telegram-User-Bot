@@ -14,7 +14,7 @@ public static class VariableHandler
     public static string[] FILTROS { get; set; } = [".net", "c#", "azure", "entity framework"];
 
     // IDs de grupos específicos - SOLO ESTOS GRUPOS SERÁN MONITOREADOS PARA RECIBIR MENSAJES
-    public static long[] GRUPOS_A_ESCUCHAR { get; set; } =
+    public static long[] GROUPS_TO_LISTEN { get; set; } =
     [
         1131530511,  // CubanTech Jobs
         1594268732,  // Cuba CompuJobs
@@ -23,12 +23,17 @@ public static class VariableHandler
     ];
 
     // IDs de grupos específicos - SOLO ESTOS GRUPOS SERÁN MONITOREADOS PARA ENVIAR MENSAJES
-    public static long[] GRUPOS_A_ENVIAR { get; set; } =
+    public static long[] GROUPS_TO_SEND { get; set; } =
     [
         1131530511,  // CubanTech Jobs
         1594268732,  // Cuba CompuJobs
         1382170463,  // Cuban Software Developers
         1449611471,  // Cuban web developers
+    ];
+
+    public static string[] MESSAGES_TO_SEND { get; set; } =
+    [
+        "Mensaje1", "Mensaje2"
     ];
 
     public static Client? Client { get; set; } = null;

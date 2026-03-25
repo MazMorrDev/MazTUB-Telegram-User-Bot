@@ -3,7 +3,7 @@ using WTelegram;
 
 namespace MazUserBot;
 
-public static class MessageBuilder
+public static class MessageHandler
 {
     // Construye los mensajes que luego se enviarán
     public async static Task ProccessMessage(Message message)
@@ -21,7 +21,7 @@ public static class MessageBuilder
             long grupoId = peerChannel.ID;
 
             // 3. Si hay lista blanca, verificar que el grupo esté en ella
-            if (VariableHandler.GRUPOS_A_ESCUCHAR.Length > 0 && !VariableHandler.GRUPOS_A_ESCUCHAR.Contains(grupoId))
+            if (VariableHandler.GROUPS_TO_LISTEN.Length > 0 && !VariableHandler.GROUPS_TO_LISTEN.Contains(grupoId))
                 return;
 
             // 4. APLICAR FILTRO
@@ -145,6 +145,26 @@ public static class MessageBuilder
         catch (Exception ex)
         {
             Console.WriteLine($"⚠️ No se pudieron listar grupos: {ex.Message}");
+        }
+    }
+
+    public async static Task SendMessage()
+    {
+        if (VariableHandler.Client != null)
+        {
+            while (true)
+            {
+                await Task.Delay(2400000); // This will be waiting 4 hours to send all the messages
+
+                foreach (var group in VariableHandler.GROUPS_TO_SEND)
+                {
+                    foreach (var message in VariableHandler.MESSAGES_TO_SEND)
+                    {
+                        await VariableHandler.Client.SendMessageAsync(new InputPeerChat(group), message);
+                    }
+                }
+
+            }
         }
     }
 }

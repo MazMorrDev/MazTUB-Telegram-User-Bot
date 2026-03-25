@@ -18,7 +18,7 @@ public static class UpdateHandler
                     if (update is UpdateNewMessage updateNewMessage &&
                         updateNewMessage.message is Message message)
                     {
-                        await MessageBuilder.ProccessMessage(message);
+                        await MessageHandler.ProccessMessage(message);
                     }
                 }
             }
