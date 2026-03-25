@@ -1,5 +1,4 @@
 ﻿using TL;
-using WTelegram;
 
 namespace MazUserBot;
 
@@ -19,7 +18,7 @@ public static class UpdateHandler
                     if (update is UpdateNewMessage updateNewMessage &&
                         updateNewMessage.message is Message message)
                     {
-                        await MessageBuilder.ProccessMessage(message, GRUPOS_A_ESCUCHAR, FILTROS, client);
+                        await MessageBuilder.ProccessMessage(message);
                     }
                 }
             }

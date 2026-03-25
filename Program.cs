@@ -4,32 +4,32 @@ using MazUserBot;
 try
 {
     // Cargar variables de entorno
-    EnvConfig.LoadEnvConfig(API_ID, API_HASH, PHONE_NUMBER, MY_USER_ID);
+    EnvConfig.LoadEnvConfig();
 
-    Console.WriteLine($"🚀 Iniciando userbot para filtrar: {string.Join(", ", FILTROS)}");
-    Console.WriteLine($"📱 Número: {PHONE_NUMBER}");
-    Console.WriteLine($"🆔 API ID: {API_ID}");
+    Console.WriteLine($"🚀 Iniciando userbot para filtrar: {string.Join(", ", VariablesHandler.FILTROS)}");
+    Console.WriteLine($"📱 Número: {VariablesHandler.PHONE_NUMBER}");
+    Console.WriteLine($"🆔 API ID: {VariablesHandler.API_ID}");
 
     // Crear cliente con la configuración
 
-    client = new Client(CredentialsConfig.Config);
+    VariablesHandler.Client = new Client(CredentialsConfig.Config);
 
     // Login automático (la primera vez pedirá código)
-    var user = await client.LoginUserIfNeeded();
+    var user = await VariablesHandler.Client.LoginUserIfNeeded();
     Console.WriteLine($"✅ Conectado como: {user.first_name} {user.last_name} (ID: {user.id})");
 
     // Actualizar MI_USER_ID con el ID real si es necesario
-    if (MY_USER_ID == 0)
+    if (VariablesHandler.MY_USER_ID == 0)
     {
-        MY_USER_ID = user.id;
-        Console.WriteLine($"ℹ️ Usando tu ID: {MY_USER_ID}");
+        VariablesHandler.MY_USER_ID = user.id;
+        Console.WriteLine($"ℹ️ Usando tu ID: {VariablesHandler.MY_USER_ID}");
     }
 
     // Mostrar todos los grupos disponibles
-    await MessageBuilder.ListGroups(client);
+    await MessageBuilder.ListGroups(VariablesHandler.Client);
 
     // Suscribirse a los mensajes nuevos
-    client.OnUpdates += UpdateHandler.OnUpdate;
+    VariablesHandler.Client.OnUpdates += UpdateHandler.OnUpdate;
 
     Console.WriteLine("\n👂 Escuchando mensajes nuevos...");
     Console.WriteLine("Presiona Ctrl+C para salir\n");
@@ -44,7 +44,7 @@ catch (Exception ex)
 }
 finally
 {
-    client?.Dispose();
+    VariablesHandler.Client?.Dispose();
 }
 
 

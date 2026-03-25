@@ -5,7 +5,7 @@ namespace MazUserBot;
 public static class EnvConfig
 {
 
-    public static void LoadEnvConfig(string API_ID, string API_HASH, string PHONE_NUMBER, long MY_USER_ID)
+    public static void LoadEnvConfig()
     {
         // Cargar archivo .env si existe
         try
@@ -19,22 +19,22 @@ public static class EnvConfig
         }
 
         // Leer variables con validación
-        API_ID = Environment.GetEnvironmentVariable("API_ID") ?? "";
-        API_HASH = Environment.GetEnvironmentVariable("API_HASH") ?? "";
-        PHONE_NUMBER = Environment.GetEnvironmentVariable("PHONE_NUMBER") ?? "";
+        VariablesHandler.API_ID = Environment.GetEnvironmentVariable("API_ID") ?? "";
+        VariablesHandler.API_HASH = Environment.GetEnvironmentVariable("API_HASH") ?? "";
+        VariablesHandler.PHONE_NUMBER = Environment.GetEnvironmentVariable("PHONE_NUMBER") ?? "";
 
         string? userIdStr = Environment.GetEnvironmentVariable("USER_ID");
         if (!string.IsNullOrEmpty(userIdStr) && long.TryParse(userIdStr, out long userId))
         {
-            MY_USER_ID = userId;
+            VariablesHandler.MY_USER_ID = userId;
         }
 
         // Validar configuración mínima
-        if (string.IsNullOrEmpty(API_ID)) throw new Exception("❌ API_ID no configurado en .env");
-        if (string.IsNullOrEmpty(API_HASH)) throw new Exception("❌ API_HASH no configurado en .env");
-        if (string.IsNullOrEmpty(PHONE_NUMBER)) throw new Exception("❌ PHONE_NUMBER no configurado en .env");
+        if (string.IsNullOrEmpty(VariablesHandler.API_ID)) throw new Exception("❌ API_ID no configurado en .env");
+        if (string.IsNullOrEmpty(VariablesHandler.API_HASH)) throw new Exception("❌ API_HASH no configurado en .env");
+        if (string.IsNullOrEmpty(VariablesHandler.PHONE_NUMBER)) throw new Exception("❌ PHONE_NUMBER no configurado en .env");
 
         // Verificar que API_ID sea número
-        if (!long.TryParse(API_ID, out _)) throw new Exception("❌ API_ID debe ser un número");
+        if (!long.TryParse(VariablesHandler.API_ID, out _)) throw new Exception("❌ API_ID debe ser un número");
     }
 }

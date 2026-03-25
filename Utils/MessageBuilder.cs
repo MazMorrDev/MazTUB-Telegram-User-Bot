@@ -6,7 +6,7 @@ namespace MazUserBot;
 public static class MessageBuilder
 {
     // Construye los mensajes que luego se enviarán
-    public async static Task ProccessMessage(Message message, long[] GRUPOS_A_MONITOREAR, string[] FILTROS, Client client)
+    public async static Task ProccessMessage(Message message)
     {
         try
         {
@@ -21,17 +21,17 @@ public static class MessageBuilder
             long grupoId = peerChannel.ID;
 
             // 3. Si hay lista blanca, verificar que el grupo esté en ella
-            if (GRUPOS_A_MONITOREAR.Length > 0 && !GRUPOS_A_MONITOREAR.Contains(grupoId))
+            if (VariablesHandler.GRUPOS_A_ESCUCHAR.Length > 0 && !VariablesHandler.GRUPOS_A_ESCUCHAR.Contains(grupoId))
                 return;
 
             // 4. APLICAR FILTRO
-            bool contieneFiltro = FILTROS.Any(filtro =>
+            bool contieneFiltro = VariablesHandler.FILTROS.Any(filtro =>
                 message.message.Contains(filtro, StringComparison.OrdinalIgnoreCase));
 
             if (!contieneFiltro) return;
 
             // 5. Obtener información del grupo
-            var chats = await client!.Messages_GetAllChats();
+            var chats = await VariablesHandler.Client!.Messages_GetAllChats();
             if (!chats.chats.TryGetValue(grupoId, out var chat))
                 return;
 
@@ -51,7 +51,7 @@ public static class MessageBuilder
 
                     try
                     {
-                        var users = await client.Users_GetUsers(new InputUser(fromUser.user_id, 0));
+                        var users = await VariablesHandler.Client.Users_GetUsers(new InputUser(fromUser.user_id, 0));
                         if (users?.Length > 0 && users[0] is User user)
                         {
                             if (!string.IsNullOrEmpty(user.first_name) || !string.IsNullOrEmpty(user.last_name))
@@ -78,7 +78,7 @@ public static class MessageBuilder
             string tituloGrupo = chat.Title ?? "Sin título";
             string texto = message.message;
             string fecha = DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss");
-            string filtrosTexto = string.Join(", ", FILTROS);
+            string filtrosTexto = string.Join(", ", VariablesHandler.FILTROS);
 
             if (texto.Length > 1000)
                 texto = texto[..1000] + "... (mensaje truncado)";
@@ -99,10 +99,10 @@ public static class MessageBuilder
                 """;
 
             // 8. Enviar a Saved Messages con Markdown (SÍ FUNCIONA)
-            await client.SendMessageAsync(new InputPeerSelf(), mensajeParaReenviar);
+            await VariablesHandler.Client.SendMessageAsync(new InputPeerSelf(), mensajeParaReenviar);
 
             // 8. Enviar a Saved Messages - VERSIÓN TEXTO PLANO (SIN HTML)
-            await client.SendMessageAsync(new InputPeerSelf(), mensajeParaReenviar);
+            await VariablesHandler.Client.SendMessageAsync(new InputPeerSelf(), mensajeParaReenviar);
 
             Console.WriteLine($"✅ [{DateTime.Now:HH:mm:ss}] Mensaje reenviado desde '{chat.Title}'");
 
