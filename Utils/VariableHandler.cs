@@ -2,7 +2,7 @@
 
 namespace MazUserBot;
 
-public static class VariablesHandler
+public static class VariableHandler
 {
     // Variables estáticas para acceso desde métodos static
     public static string API_ID { get; set; } = "";

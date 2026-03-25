@@ -9,9 +9,9 @@ public static class CredentialsConfig
         EnvConfig.LoadEnvConfig();
         switch (what)
         {
-            case "api_id": return VariablesHandler.API_ID;
-            case "api_hash": return VariablesHandler.API_HASH;
-            case "phone_number": return VariablesHandler.PHONE_NUMBER;
+            case "api_id": return VariableHandler.API_ID;
+            case "api_hash": return VariableHandler.API_HASH;
+            case "phone_number": return VariableHandler.PHONE_NUMBER;
             case "verification_code":
                 Console.Write("📱 Código de verificación: ");
                 return Console.ReadLine();
