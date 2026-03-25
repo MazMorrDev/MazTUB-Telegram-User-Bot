@@ -1,35 +1,5 @@
 ﻿using WTelegram;
-using TL;
-using WorkFilterBot;
-
-// Variables estáticas para acceso desde métodos static
-string API_ID = "";
-string API_HASH = "";
-string PHONE_NUMBER = "";
-long MY_USER_ID = 0;
-
-// El texto a filtrar
-string[] FILTROS = [".net", "c#", "azure", "entity framework"];
-
-// IDs de grupos específicos - SOLO ESTOS GRUPOS SERÁN MONITOREADOS PARA RECIBIR MENSAJES
-long[] GRUPOS_A_ESCUCHAR =
-[
-    1131530511,  // CubanTech Jobs
-    1594268732,  // Cuba CompuJobs
-    1382170463,  // Cuban Software Developers
-    1449611471,  // Cuban web developers
-];
-
-// IDs de grupos específicos - SOLO ESTOS GRUPOS SERÁN MONITOREADOS PARA ENVIAR MENSAJES
-long[] GRUPOS_A_ENVIAR =
-[
-    1131530511,  // CubanTech Jobs
-    1594268732,  // Cuba CompuJobs
-    1382170463,  // Cuban Software Developers
-    1449611471,  // Cuban web developers
-];
-
-Client? client = null;
+using MazUserBot;
 
 try
 {
@@ -59,7 +29,7 @@ try
     await MessageBuilder.ListGroups(client);
 
     // Suscribirse a los mensajes nuevos
-    client.OnUpdates += OnUpdate;
+    client.OnUpdates += UpdateHandler.OnUpdate;
 
     Console.WriteLine("\n👂 Escuchando mensajes nuevos...");
     Console.WriteLine("Presiona Ctrl+C para salir\n");
@@ -77,29 +47,6 @@ finally
     client?.Dispose();
 }
 
-// Manejador de actualizaciones (mensajes nuevos)
-async Task OnUpdate(IObject arg)
-{
-    try
-    {
-        // Procesar diferentes tipos de actualizaciones
-        if (arg is UpdatesBase updatesBase)
-        {
-            foreach (var update in updatesBase.UpdateList)
-            {
-                // Cuando llega un mensaje nuevo
-                if (update is UpdateNewMessage updateNewMessage &&
-                    updateNewMessage.message is Message message)
-                {
-                    await MessageBuilder.ProccessMessage(message, GRUPOS_A_ESCUCHAR, FILTROS, client);
-                }
-            }
-        }
-    }
-    catch (Exception ex)
-    {
-        Console.WriteLine($"❌ Error en update: {ex.Message}");
-    }
-}
+
 
 

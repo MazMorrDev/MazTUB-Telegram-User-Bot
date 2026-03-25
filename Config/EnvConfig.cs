@@ -1,6 +1,6 @@
 ﻿using DotNetEnv;
 
-namespace WorkFilterBot;
+namespace MazUserBot;
 
 public static class EnvConfig
 {

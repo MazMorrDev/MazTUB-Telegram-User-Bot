@@ -1,4 +1,4 @@
-﻿namespace WorkFilterBot;
+﻿namespace MazUserBot;
 
 public static class CredentialsConfig
 {

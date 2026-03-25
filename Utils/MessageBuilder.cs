@@ -1,7 +1,7 @@
 ﻿using TL;
 using WTelegram;
 
-namespace WorkFilterBot;
+namespace MazUserBot;
 
 public static class MessageBuilder
 {

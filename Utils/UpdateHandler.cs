@@ -1,6 +1,32 @@
-﻿namespace MazUserBot;
+﻿using TL;
+using WTelegram;
 
-public class UpdateHandler
+namespace MazUserBot;
+
+public static class UpdateHandler
 {
-
+    // Manejador de actualizaciones (mensajes nuevos)
+    public static async Task OnUpdate(IObject arg)
+    {
+        try
+        {
+            // Procesar diferentes tipos de actualizaciones
+            if (arg is UpdatesBase updatesBase)
+            {
+                foreach (var update in updatesBase.UpdateList)
+                {
+                    // Cuando llega un mensaje nuevo
+                    if (update is UpdateNewMessage updateNewMessage &&
+                        updateNewMessage.message is Message message)
+                    {
+                        await MessageBuilder.ProccessMessage(message, GRUPOS_A_ESCUCHAR, FILTROS, client);
+                    }
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"❌ Error en update: {ex.Message}");
+        }
+    }
 }
