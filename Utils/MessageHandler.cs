@@ -154,16 +154,16 @@ public static class MessageHandler
         {
             while (true)
             {
-                await Task.Delay(2400000); // This will be waiting 4 hours to send all the messages
-
-                foreach (var group in VariableHandler.GROUPS_TO_SEND)
+                foreach (var message in VariableHandler.MESSAGES_TO_SEND)
                 {
-                    foreach (var message in VariableHandler.MESSAGES_TO_SEND)
+                    await Task.Delay(1500000); // This will be waiting 2.5 hours to send all the messages
+                    foreach (var group in VariableHandler.GROUPS_TO_SEND)
                     {
                         await VariableHandler.Client.SendMessageAsync(new InputPeerChat(group), message);
+                        Console.WriteLine($"Group ID: {group}, Message sended: \n{message}");
+                        await Task.Delay(100);
                     }
                 }
-
             }
         }
     }
