@@ -1,7 +1,7 @@
 services:
-  workfilterbot:
+  MazUserBot:
     build: .
-    container_name: workfilterbot
+    container_name: MazUserBot
     restart: unless-stopped
     environment:
       - API_ID=${API_ID}
