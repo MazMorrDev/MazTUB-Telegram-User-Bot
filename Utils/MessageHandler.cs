@@ -156,7 +156,7 @@ public static class MessageHandler
             {
                 foreach (var message in VariableHandler.MESSAGES_TO_SEND)
                 {
-                    await Task.Delay(1500000); // This will be waiting 2.5 hours to send all the messages
+                    await Task.Delay(1500000); // This will be waiting 2.5 hours to send each message
                     foreach (var group in VariableHandler.GROUPS_TO_SEND)
                     {
                         await VariableHandler.Client.SendMessageAsync(new InputPeerChat(group), message);
