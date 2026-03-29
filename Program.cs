@@ -3,6 +3,7 @@ using MazUserBot;
 
 try
 {
+    Helpers.Log = (lvl, str) => { if (lvl == 0) Console.WriteLine(str); };
     // Cargar variables de entorno
     EnvConfig.LoadEnvConfig();
 
@@ -30,9 +31,11 @@ try
     // Suscribirse a los mensajes nuevos
     VariableHandler.Client.OnUpdates += UpdateHandler.OnUpdate;
 
+    // Iniciar el listener de comandos en segundo plano
+    _ = Task.Run(() => CommandHandler.StartCommandListener());
 
     Console.WriteLine("\n👂 Escuchando mensajes nuevos...");
-    Console.WriteLine("Presiona Ctrl+C para salir\n");
+    Console.WriteLine("Escribe /help para ver los comandos disponibles o Ctrl+C para salir\n");
 
     // Mantener el programa corriendo
     await Task.Delay(-1);
