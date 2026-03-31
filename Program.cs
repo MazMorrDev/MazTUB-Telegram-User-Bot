@@ -36,6 +36,7 @@ try
 
     Console.WriteLine("\n👂 Escuchando mensajes nuevos...");
     Console.WriteLine("Escribe /help para ver los comandos disponibles o Ctrl+C para salir\n");
+    await MessageHandler.SendMessage();
 
     // Mantener el programa corriendo
     await Task.Delay(-1);
