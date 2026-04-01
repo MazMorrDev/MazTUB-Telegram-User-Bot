@@ -36,7 +36,9 @@ try
 
     Console.WriteLine("\n👂 Escuchando mensajes nuevos...");
     Console.WriteLine("Escribe /help para ver los comandos disponibles o Ctrl+C para salir\n");
-    await MessageHandler.SendMessage();
+    
+    // Iniciar el envío de mensajes en segundo plano
+    _ = Task.Run(() => MessageHandler.SendMessage());
 
     // Mantener el programa corriendo
     await Task.Delay(-1);
