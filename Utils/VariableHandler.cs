@@ -70,8 +70,8 @@ ACTUALIZACIÓN DE DRIVERS⚙️
 - 2 USD Drivers Generales
 
 - 1 USD Drivers Gráficos
---------------------------------
-DESINFECCIÓN O ELIMINACIÓN DE VIRUS INFORMÁTICOS 🦠
+-------------------------------
+DESINFECCIÓN O ELIMINACIÓN DE VIRUS INFORMÁTICOS 🦠 
 
 - Instalación de ESET NOD 32:  2 USD 
 
@@ -97,6 +97,9 @@ SERVICIOS DE DESARROLLO  DE SOFTWARE PERSONALIZADO
 - Creación de bots para Telegram 🤖 
 - Creación de aplicaciones para PC 💻",
     ];
+
+    // Intervalo en horas entre envíos de mensajes
+    public static int MESSAGE_INTERVAL_HOURS { get; set; } = 1;
 
     public static Client? Client { get; set; } = null;
 }

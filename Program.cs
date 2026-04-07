@@ -7,6 +7,9 @@ try
     // Cargar variables de entorno
     EnvConfig.LoadEnvConfig();
 
+    // Cargar configuración desde archivo JSON
+    ConfigManager.LoadConfig();
+
     Console.WriteLine($"🚀 Iniciando userbot para filtrar: {string.Join(", ", VariableHandler.FILTROS)}");
     Console.WriteLine($"📱 Número: {VariableHandler.PHONE_NUMBER}");
     Console.WriteLine($"🆔 API ID: {VariableHandler.API_ID}");
@@ -36,7 +39,7 @@ try
 
     Console.WriteLine("\n👂 Escuchando mensajes nuevos...");
     Console.WriteLine("Escribe /help para ver los comandos disponibles o Ctrl+C para salir\n");
-    
+
     // Iniciar el envío de mensajes en segundo plano
     _ = Task.Run(() => MessageHandler.SendMessage());
 
@@ -52,7 +55,3 @@ finally
 {
     VariableHandler.Client?.Dispose();
 }
-
-
-
-

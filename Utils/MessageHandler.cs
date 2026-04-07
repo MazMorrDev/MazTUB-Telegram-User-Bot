@@ -98,13 +98,8 @@ public static class MessageHandler
                 🤖 Enviado por tu userbot
                 """;
 
-            // 8. Enviar a Saved Messages con Markdown (SÍ FUNCIONA)
+            // Enviar a Saved Messages
             await VariableHandler.Client.SendMessageAsync(new InputPeerSelf(), mensajeParaReenviar);
-
-            // 8. Enviar a Saved Messages - VERSIÓN TEXTO PLANO (SIN HTML)
-            await VariableHandler.Client.SendMessageAsync(new InputPeerSelf(), mensajeParaReenviar);
-
-            Console.WriteLine($"✅ [{DateTime.Now:HH:mm:ss}] Mensaje reenviado desde '{chat.Title}'");
 
             Console.WriteLine($"✅ [{DateTime.Now:HH:mm:ss}] Mensaje reenviado desde '{chat.Title}'");
         }
@@ -156,7 +151,7 @@ public static class MessageHandler
             {
                 foreach (var message in VariableHandler.MESSAGES_TO_SEND)
                 {
-                    await Task.Delay(1500000); // This will be waiting 2.5 hours to send each message
+                    await Task.Delay(TimeSpan.FromHours(VariableHandler.MESSAGE_INTERVAL_HOURS));
                     foreach (var group in VariableHandler.GROUPS_TO_SEND)
                     {
                         await VariableHandler.Client.SendMessageAsync(new InputPeerChat(group), message);
