@@ -1,5 +1,4 @@
-using System;
-using MazUserBot;
+using MazUserBot.Utils;
 
 namespace MazUserBot.Test
 {

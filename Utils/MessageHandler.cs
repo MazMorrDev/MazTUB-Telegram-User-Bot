@@ -1,7 +1,7 @@
 ﻿using TL;
 using WTelegram;
 
-namespace MazUserBot;
+namespace MazUserBot.Utils;
 
 public static class MessageHandler
 {

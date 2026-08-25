@@ -1,4 +1,6 @@
-﻿namespace MazUserBot;
+﻿using MazUserBot.Utils;
+
+namespace MazUserBot;
 
 public static class CredentialsConfig
 {

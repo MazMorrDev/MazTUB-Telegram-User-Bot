@@ -1,6 +1,6 @@
 ﻿using TL;
 
-namespace MazUserBot;
+namespace MazUserBot.Utils;
 
 public static class UpdateHandler
 {

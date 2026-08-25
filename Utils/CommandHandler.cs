@@ -1,4 +1,4 @@
-﻿namespace MazUserBot;
+﻿namespace MazUserBot.Utils;
 
 public static class CommandHandler
 {
