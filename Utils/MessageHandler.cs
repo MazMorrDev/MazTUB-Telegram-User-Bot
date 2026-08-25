@@ -154,7 +154,14 @@ public static class MessageHandler
                     await Task.Delay(TimeSpan.FromHours(VariableHandler.MESSAGE_INTERVAL_HOURS));
                     foreach (var group in VariableHandler.GROUPS_TO_SEND)
                     {
-                        await VariableHandler.Client.SendMessageAsync(new InputPeerChat(group), message);
+                        var peer = await VariableHandler.GetInputPeer(group);
+                        if (peer == null)
+                        {
+                            Console.WriteLine($"⚠️ No se pudo resolver peer para grupo {group}");
+                            continue;
+                        }
+
+                        await VariableHandler.Client.SendMessageAsync(peer, message);
                         Console.WriteLine($"Group ID: {group}, Message sended: \n{message}");
                         await Task.Delay(100);
                     }

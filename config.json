@@ -1,9 +1,27 @@
 {
-  "FILTROS": [".net", "c#", "azure", "entity framework"],
-  "GROUPS_TO_LISTEN": [1131530511, 1594268732, 1382170463, 1449611471],
-  "GROUPS_TO_SEND": [1362472995, 1586059492, 1458437447, 1225295351, 1424462534, 1638394149, 2147183997, 1352130778, 1128327152],
+  "FILTROS": [
+    ".net",
+    "c#",
+    "azure",
+    "entity framework"
+  ],
+  "GROUPS_TO_LISTEN": [
+    1131530511,
+    1594268732,
+    1382170463,
+    1449611471
+  ],
+  "GROUPS_TO_SEND": [
+    1362472995,
+    1458437447,
+    1225295351,
+    1424462534,
+    2147183997,
+    1352130778,
+    1128327152
+  ],
   "MESSAGES_TO_SEND": [
-    "Servicios Informáticos\n\n🌐 Redes Sociales:\n- Telegram: @MazMorr\n- WhatsApp: +53 5550 5961\n\n⚠️ Todos los precios están en USD pero se acepta cualquier moneda al cambio del momento, incluyendo el pago por tarjeta ⚠️ \n---------------------------------------\nINSTALACIÓN O ACTUALIZACIÓN DE  WINDOWS: 3 USD\n\n- Windows 11Pro 22H2\n- Windows 10 22H2\n- Windows 8  All EditionsES Full\n- Windows 7 All EditionsES Full\n- Linux Mint 22.2\n- Kali Linux 2024.2\n- Manjaro 23.0.4\n- Ubuntu 2004\n\n- Activación De Windows: 1 USD\n----------------------------------\nLISTADO DE LOS SOFTWARE  2026\n(En cuanto usted como cliente requiera de este servicio yo le envio todo el catálogo para q pueda escoger)\n\n- Cada 8 aplicaciones instaladas con éxito 1 USD \n-----------------------------------\nACTUALIZACIÓN DE DRIVERS⚙️ \n(Es prioritario cuando se acaba de instalar Windows o en caso de incorporar nuevo hardware a su equipo)\n\n- 2 USD Drivers Generales\n\n- 1 USD Drivers Gráficos\n-------------------------------\nDESINFECCIÓN O ELIMINACIÓN DE VIRUS INFORMÁTICOS 🦠 \n\n- Instalación de ESET NOD 32:  2 USD \n\n- Actualización de ESET NOD 32: 1 USD \n\n- Instalación de USB-AV: 2 USD\n---------------------------------------------------\nMANTENIMIENTO 🪛 (Recomendado)\n\n- Limpieza de polvo básica: 2 USD \n\n- Cambio de pasta térmica en Microprocesadores + Limpieza de su respectivo disipador 3 USD \n\n- Cambio de pasta térmica en Tarjetas Gráficas + Limpieza de su respectivo disipador térmico 4 USD \n\n- Limpieza profunda de teclado y mouse ⌨️ 🐁: 3 USD \n-------------------------------\nSERVICIOS DE DESARROLLO  DE SOFTWARE PERSONALIZADO \n⚠️Todos los precios son negociables ⚠️ \n\n- Diseño e integración de bases de datos para proyectos 📦\n- Creación de páginas web. 🕸 \n- Creación de bots para Telegram 🤖 \n- Creación de aplicaciones para PC 💻"
+    "Tu informático en Cárdenas 😳\n\nSe hacen todo tipo de servicios de informática\n- Instalación o Actualización de Windows\n- Instalación y actualización del antivirus\n- Limpieza de periféricos (mouse y teclado)\n- Mantenimiento especializado para que su equipo dure muchos años más \n- Resolución de cualquier tipo de problema con el BIOS\n- Instalación de drivers tanto generales como gráficos \n- Creación de todo tipo de software/web/bot/script personalizado para usted\n- Y más, si tiene alguna duda tan solo pregunte sin pena"
   ],
   "MESSAGE_INTERVAL_HOURS": 1
 }

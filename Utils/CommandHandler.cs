@@ -288,7 +288,15 @@ public static class CommandHandler
             {
                 try
                 {
-                    await VariableHandler.Client.SendMessageAsync(new InputPeerChat(groupId), message);
+                    var peer = await VariableHandler.GetInputPeer(groupId);
+                    if (peer == null)
+                    {
+                        Console.WriteLine($"❌ Error enviando al grupo {groupId}: No se pudo resolver el peer (¿el bot está en este grupo?)");
+                        failedCount++;
+                        continue;
+                    }
+
+                    await VariableHandler.Client.SendMessageAsync(peer, message);
                     Console.WriteLine($"✅ Mensaje enviado al grupo {groupId}");
                     sentCount++;
                     await Task.Delay(200);
