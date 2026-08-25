@@ -1,4 +1,7 @@
-﻿namespace MazUserBot.Utils;
+﻿using WTelegram;
+using TL;
+
+namespace MazUserBot.Utils;
 
 public static class CommandHandler
 {
@@ -11,6 +14,7 @@ public static class CommandHandler
         Console.WriteLine("  /removelisten <group_id> - Remover grupo de escucha");
         Console.WriteLine("  /addsend <group_id>    - Añadir grupo de envío");
         Console.WriteLine("  /removesend <group_id> - Remover grupo de envío");
+        Console.WriteLine("  /sendnow               - Enviar todos los mensajes ahora");
         Console.WriteLine("  /addmessage <texto>    - Añadir mensaje para enviar");
         Console.WriteLine("  /removemessage <índice> - Remover mensaje por índice");
         Console.WriteLine("  /listconfig            - Mostrar configuración actual");
@@ -70,9 +74,7 @@ public static class CommandHandler
                 string filterToAdd = string.Join(" ", args);
                 if (!VariableHandler.FILTROS.Any(f => f.Equals(filterToAdd, StringComparison.OrdinalIgnoreCase)))
                 {
-                    var newFilters = VariableHandler.FILTROS.ToList();
-                    newFilters.Add(filterToAdd);
-                    VariableHandler.FILTROS = newFilters.ToArray();
+                    ConfigManager.AddFilter(filterToAdd);
                     Console.WriteLine($"✅ Filtro añadido: '{filterToAdd}'");
                 }
                 else
@@ -96,6 +98,7 @@ public static class CommandHandler
                 if (removedCount > 0)
                 {
                     VariableHandler.FILTROS = filtersList.ToArray();
+                    ConfigManager.SaveConfig();
                     Console.WriteLine($"✅ Filtro removido: '{filterToRemove}' ({removedCount} ocurrencia(s))");
                 }
                 else
@@ -111,11 +114,9 @@ public static class CommandHandler
                     return;
                 }
 
-                var listenGroupsList = VariableHandler.GROUPS_TO_LISTEN.ToList();
-                if (!listenGroupsList.Contains(listenGroupId))
+                if (!VariableHandler.GROUPS_TO_LISTEN.Contains(listenGroupId))
                 {
-                    listenGroupsList.Add(listenGroupId);
-                    VariableHandler.GROUPS_TO_LISTEN = listenGroupsList.ToArray();
+                    ConfigManager.AddListenGroup(listenGroupId);
                     Console.WriteLine($"✅ Grupo de escucha añadido: {listenGroupId}");
                 }
                 else
@@ -135,6 +136,7 @@ public static class CommandHandler
                 if (listenGroupsToModify.Remove(removeListenGroupId))
                 {
                     VariableHandler.GROUPS_TO_LISTEN = listenGroupsToModify.ToArray();
+                    ConfigManager.SaveConfig();
                     Console.WriteLine($"✅ Grupo de escucha removido: {removeListenGroupId}");
                 }
                 else
@@ -150,11 +152,9 @@ public static class CommandHandler
                     return;
                 }
 
-                var sendGroupsList = VariableHandler.GROUPS_TO_SEND.ToList();
-                if (!sendGroupsList.Contains(sendGroupId))
+                if (!VariableHandler.GROUPS_TO_SEND.Contains(sendGroupId))
                 {
-                    sendGroupsList.Add(sendGroupId);
-                    VariableHandler.GROUPS_TO_SEND = sendGroupsList.ToArray();
+                    ConfigManager.AddSendGroup(sendGroupId);
                     Console.WriteLine($"✅ Grupo de envío añadido: {sendGroupId}");
                 }
                 else
@@ -174,12 +174,17 @@ public static class CommandHandler
                 if (sendGroupsToModify.Remove(removeSendGroupId))
                 {
                     VariableHandler.GROUPS_TO_SEND = sendGroupsToModify.ToArray();
+                    ConfigManager.SaveConfig();
                     Console.WriteLine($"✅ Grupo de envío removido: {removeSendGroupId}");
                 }
                 else
                 {
                     Console.WriteLine($"⚠️ No se encontró el grupo de envío {removeSendGroupId}.");
                 }
+                break;
+
+            case "sendnow":
+                await SendMessagesNow();
                 break;
 
             case "addmessage":
@@ -190,9 +195,7 @@ public static class CommandHandler
                 }
 
                 string messageToAdd = string.Join(" ", args);
-                var messagesList = VariableHandler.MESSAGES_TO_SEND.ToList();
-                messagesList.Add(messageToAdd);
-                VariableHandler.MESSAGES_TO_SEND = messagesList.ToArray();
+                ConfigManager.AddMessage(messageToAdd);
                 Console.WriteLine($"✅ Mensaje añadido: '{messageToAdd}'");
                 break;
 
@@ -209,6 +212,7 @@ public static class CommandHandler
                     string removedMessage = messagesToModify[messageIndex];
                     messagesToModify.RemoveAt(messageIndex);
                     VariableHandler.MESSAGES_TO_SEND = messagesToModify.ToArray();
+                    ConfigManager.SaveConfig();
                     Console.WriteLine($"✅ Mensaje removido (índice {messageIndex}): '{removedMessage}'");
                 }
                 else
@@ -234,6 +238,7 @@ public static class CommandHandler
                 Console.WriteLine("  /removelisten <group_id> - Remover grupo de escucha");
                 Console.WriteLine("  /addsend <group_id>    - Añadir grupo de envío");
                 Console.WriteLine("  /removesend <group_id> - Remover grupo de envío");
+                Console.WriteLine("  /sendnow               - Enviar todos los mensajes ahora");
                 Console.WriteLine("  /addmessage <texto>    - Añadir mensaje para enviar");
                 Console.WriteLine("  /removemessage <índice> - Remover mensaje por índice");
                 Console.WriteLine("  /listconfig            - Mostrar configuración actual");
@@ -250,5 +255,52 @@ public static class CommandHandler
                 Console.WriteLine($"❌ Comando desconocido: /{command}. Use /help para ver los comandos disponibles.");
                 break;
         }
+    }
+
+    private static async Task SendMessagesNow()
+    {
+        if (VariableHandler.Client == null)
+        {
+            Console.WriteLine("❌ El cliente no está inicializado. Esperando conexión a Telegram...");
+            return;
+        }
+
+        if (VariableHandler.MESSAGES_TO_SEND.Length == 0)
+        {
+            Console.WriteLine("⚠️ No hay mensajes pendientes para enviar.");
+            return;
+        }
+
+        if (VariableHandler.GROUPS_TO_SEND.Length == 0)
+        {
+            Console.WriteLine("⚠️ No hay grupos configurados para enviar mensajes.");
+            return;
+        }
+
+        Console.WriteLine($"🚀 Enviando {VariableHandler.MESSAGES_TO_SEND.Length} mensaje(s) a {VariableHandler.GROUPS_TO_SEND.Length} grupo(s)...");
+
+        int sentCount = 0;
+        int failedCount = 0;
+
+        foreach (var message in VariableHandler.MESSAGES_TO_SEND)
+        {
+            foreach (var groupId in VariableHandler.GROUPS_TO_SEND)
+            {
+                try
+                {
+                    await VariableHandler.Client.SendMessageAsync(new InputPeerChat(groupId), message);
+                    Console.WriteLine($"✅ Mensaje enviado al grupo {groupId}");
+                    sentCount++;
+                    await Task.Delay(200);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"❌ Error enviando al grupo {groupId}: {ex.Message}");
+                    failedCount++;
+                }
+            }
+        }
+
+        Console.WriteLine($"\n📊 Resumen: {sentCount} mensaje(s) enviado(s), {failedCount} error(es).");
     }
 }
